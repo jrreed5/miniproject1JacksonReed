@@ -33,7 +33,7 @@ Jackson Reed
 
 ## Version History
 
-    * See [commit change]() or See [release history]
+    * See release history
 
 ## License
 
