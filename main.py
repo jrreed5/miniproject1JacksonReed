@@ -22,21 +22,14 @@ import yfinance as yf
 #(20/20 points) There should be a README.md file in your project that explains what your project is,
 # how to install the pip requirements, and how to execute the program. Please use the GitHub flavor of Markdown.
 
-#tickers = ["TTWO", "MSFT", ""]
-#
-#for ticker in tickers:
-#    myticker = yf.Ticker(ticker)
-#    history = myticker.history(start="2024-1-1", end="2024-1-10")
-#for date in history['Close']:
-#        print(date)
-
 # Function to fetch stock data
-def fetch_stock_data(tickers, period="1mo"):
+def fetch_stock_data(tickers, period="10d"):
     data = yf.download(tickers, period=period)["Adj Close"]
     return data
 
 # List of favorite stock tickers
 tickers = ["TTWO", "MSFT", "GOOGL", "AMZN", "AAPL"]
+
 
 # Fetching stock data for the last 10 trading days
 stock_data = fetch_stock_data(tickers, period="10d")
@@ -63,6 +56,6 @@ for ticker in tickers:
     plt.xlabel("Date")
     plt.ylabel("Price (USD)")
     plt.grid(True)
-    plt.savefig(f"charts/{ticker}_closing_prices.png")
+    plt.savefig(f"{ticker}_closing_prices.png")
 
 plt.show()
