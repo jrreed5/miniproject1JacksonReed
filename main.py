@@ -41,6 +41,6 @@ for ticker in tickers:
     plt.xlabel("Date")
     plt.ylabel("Price (USD)")
     plt.grid(True)
-    plt.savefig(f"{ticker}_closing_prices.png")
+    plt.savefig(f"images/{ticker}_closing_prices.png")
 
 plt.show()
