@@ -33,7 +33,7 @@ MANIFEST
 *.spec
 
 # directory
-./images
+./images/*
 
 # Installer logs
 pip-log.txt
