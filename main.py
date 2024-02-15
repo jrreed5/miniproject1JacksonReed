@@ -2,45 +2,47 @@
 # Jackson Reed
 # Mini Project 1
 
+import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
-import yfinance as yf
+from pathlib import Path
 
-
-# Function to fetch stock data
-def fetch_stock_data(stock_symbols, period="10d"):
-    data = yf.download(stock_symbols, period=period)["Adj Close"]
-    return data
-
-
-# List of favorite stock tickers
 tickers = ["TTWO", "MSFT", "GOOGL", "AMZN", "AAPL"]
 
-# Fetching stock data for the last 10 trading days
-stock_data = fetch_stock_data(tickers, period="10d")
+def getClosing(ticker):
+    stock = yf.Ticker(ticker)
+    hist = stock.history(period="10d")
+    closingList = []
+    for price in hist['Close']:
+        closingList.append(price)
+    return closingList
 
-# Convert data to a numpy array
-stock_array = np.array(stock_data)
 
-# Plotting the stock data
-plt.figure(figsize=(10, 6))
-for ticker in tickers:
-    plt.plot(stock_data.index, stock_data[ticker], label=ticker)
-
-plt.title("Closing Price")
-plt.xlabel("Date")
-plt.ylabel("Value")
-plt.legend()
-plt.grid(True)
-
-# Saving the plot as PNG
-for ticker in tickers:
-    plt.figure()
-    plt.plot(stock_data.index, stock_data[ticker])
-    plt.title(f"Closing Prices of {ticker}")
-    plt.xlabel("Date")
-    plt.ylabel("Price (USD)")
+def plotGraph(stock):
+    stockClosing = np.array(getClosing(stock))
+    days = list(range(1, len(stockClosing)+1))
+    plt.plot(days, stockClosing)
+    prices = getClosing(stock)
+    prices.sort()
+    low_price = prices[0]
+    high_price = prices[-1]
+    plt.axis([1, 10, low_price-2, high_price+2])
     plt.grid(True)
-    plt.savefig(f"images/{ticker}_closing_prices.png")
+    plt.xlabel("Date")
+    plt.ylabel("Value")
+    plt.title(f"Closing Prices of {stock}")
+    plt.savefig(f"images/{stock}.png")
+    plt.show()
 
-plt.show()
+# !Program runs here!
+# Tries to make image path
+try:
+    Path("images").mkdir()
+except FileExistsError:
+    pass
+
+tickers = ["TTWO", "MSFT", "GOOGL", "AMZN", "AAPL"]
+
+for stock in tickers:
+    getClosing(stock)
+    plotGraph(stock)
