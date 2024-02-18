@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-tickers = ["TTWO", "MSFT", "GOOGL", "AMZN", "AAPL"]
 
 def getClosing(ticker):
     stock = yf.Ticker(ticker)
